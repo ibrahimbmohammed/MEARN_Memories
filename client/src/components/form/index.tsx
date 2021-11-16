@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from "redux"
 // @ts-ignore
 import FileBase from 'react-file-base64'
-import {getPosts} from  '../../redux/actions/posts'
+import {createPost} from  '../../redux/actions/posts'
 
 type UserSubmitForm = {
     creator: string;
@@ -20,8 +20,16 @@ const Index:React.FunctionComponent = () => {
     const { register, handleSubmit } = useForm<UserSubmitForm>();
 
     
-    const onSubmit = (data: UserSubmitForm): void => {
-       dispatch(getPosts())
+    const onSubmit = (values: UserSubmitForm): void => {
+      const data:UserSubmitForm = {
+        creator: values.creator,
+        title: values.title,
+        description: values.description,
+        tags: values.tags,
+        pic: image
+      }
+
+       dispatch(createPost(data))
         //console.log(data);
         //console.log(image);
       };

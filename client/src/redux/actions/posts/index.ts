@@ -1,12 +1,13 @@
 import * as api from '../../../axios'
 
-interface PostModel {
-    title : string
-    imageUri : string
-    creator: string
-    description: string
-    tags: string
-}
+
+type UserSubmitForm = {
+  creator: string;
+  title: string;
+  description: string;
+  tags: string;
+  pic: string
+};
 
 
 export const getPosts = () => async (dispatch:any) => {
@@ -25,10 +26,10 @@ export const getPosts = () => async (dispatch:any) => {
 }
 
 
-export const createPost = (post:PostModel)=> async (dispatch:any) => {
+export const createPost = (post:UserSubmitForm)=> async (dispatch:any) => {
     try {
         const {data} = await api.createPost(post)
-        dispatch({type: 'CREATE', payload: data})
+        dispatch({type: 'ADD_POST', payload: data})
     } catch (error:unknown) {
         if (error instanceof Error) {
             return {
@@ -39,7 +40,7 @@ export const createPost = (post:PostModel)=> async (dispatch:any) => {
 }  
 
 
-export const updatePost = (id:string, post:PostModel) => async (dispatch:any) => {
+export const updatePost = (id:string, post:UserSubmitForm) => async (dispatch:any) => {
     try {
         const {data} = await api.updatePost(id, post); 
         dispatch({type:'UPDATE', payload: data})
